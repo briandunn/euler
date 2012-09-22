@@ -30,6 +30,6 @@
 (deftest less-than-fourty
   (is (= '(2 8 34) (less-than 40 (even fibonacci)))))
 
-(run-tests)
+; (run-tests)
 
-(println (reduce + (less-than 4000000 (even fibonacci))))
+(println (->> fibonacci even (less-than 4000000) (reduce +)))
