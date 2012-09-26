@@ -11,11 +11,21 @@
 ;      If there was no such number, stop.
 ;      Otherwise, let p now equal this number (which is the next prime), and repeat from step 3.
 
-(use 'clojure.test)
+(use '(clojure test set))
 
-(defn factors [n] ())
+(defn primes
+  ([]
+    (primes 2 (next (next (next (range))))))
+  ([p s]
+   (cons p (lazy-seq (primes (first s) (filter #(not= 0 (mod % p)) (next s)))))))
 
-(deftest test-factors
-  (is (= '(5 7 13 29) (factors 13195))))
+(defn factors [n] )
+
+(deftest test-primes
+  (is (= '(2) (take 1 (primes))))
+  (is (= '(2 3 5 7 11) (take 5 (primes)))))
+
+; (deftest test-factors
+;   (is (= '(5 7 13 29) (factors 13195))))
 
 (run-tests)
