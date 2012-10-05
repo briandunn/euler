@@ -22,7 +22,7 @@
 ; for each prime:
   ; check if divisible by prime P
   ; if it is add that prime to the factor list and begin to work against the result of the devision instead
-(defn factors [n] (filter #(= 0 (mod n %)) (primes)))
+(defn factors [n] (filter #(= 0 (mod n %)) (take-while #(< % n) (primes))))
 
 (deftest test-primes
   (is (= '(2) (take 1 (primes))))
