@@ -14,22 +14,29 @@
 (use '(clojure test set))
 
 (defn primes
-  ([]
-    (primes 2 (next (next (next (range))))))
+  ([m]
+    (primes [2] (range 3 m)))
   ([p s]
-   (cons p (lazy-seq (primes (first s) (filter #(not= 0 (mod % p)) (next s)))))))
+     (loop [primes p series s]
+       (let [prime (last primes)]
+         (if (empty? series)
+           primes
+           (recur (conj primes (first series)) (doall (filter #(not (zero? (mod % prime))) (rest series))))
+           )))))
 
 ; for each prime:
   ; check if divisible by prime P
   ; if it is add that prime to the factor list and begin to work against the result of the devision instead
-(defn factors [n] (filter #(= 0 (mod n %)) (take-while #(< % n) (primes))))
+(defn factors [n] (filter #(= 0 (mod n %)) (primes n)))
 
 (deftest test-primes
-  (is (= '(2) (take 1 (primes))))
-  (is (= '(2 3 5 7 11) (take 5 (primes)))))
+  (is (= '(2) (primes 2)))
+  (is (= '(2 3 5 7 11) (primes 12)))
+         )
 
-(deftest test-factors
-  (is (= '(5 7 13 29) (factors 13195))))
+; (deftest test-factors
+;   (is (= '(5 7 13 29) (factors 13195))))
 
 (run-tests)
+; (println (last (primes 851475143)))
 ; (println (last (factors 600851475143)))
