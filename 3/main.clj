@@ -26,12 +26,12 @@
 (defn factor? [n of] (= 0 (mod of n)))
 (defn factors
   ([n] (factors n (primes)))
-  ([n ps]
-   (let [thisPrime (first ps)]
-     (if (factor? thisPrime n)
-       (cons thisPrime (factors (/ n thisPrime) (next ps)))
-       (if (< thisPrime n)
-         (factors n (next ps))
+  ([n prime-seq]
+   (let [this-prime (first prime-seq) rest-of-primes (next prime-seq)]
+     (if (factor? this-prime n)
+       (cons this-prime (factors (/ n this-prime) rest-of-primes))
+       (if (< this-prime n)
+         (factors n rest-of-primes)
          '())))))
 
 (deftest test-primes
