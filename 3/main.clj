@@ -23,7 +23,16 @@
   ; check if divisible by prime P
   ; if it is add that prime to the factor list and begin to work against the result of the devision instead
 
-(defn factors [n] (filter #(= 0 (mod n %)) (take-while #(<= % n) (primes))))
+(defn factor? [n of] (= 0 (mod of n)))
+(defn factors
+  ([n] (factors n (primes)))
+  ([n ps]
+   (let [thisPrime (first ps)]
+     (if (factor? thisPrime n)
+       (cons thisPrime (factors (/ n thisPrime) (next ps)))
+       (if (< thisPrime n)
+         (factors n (next ps))
+         '())))))
 
 (deftest test-primes
   (is (= '(2) (take 1 (primes))))
@@ -39,4 +48,4 @@
   (is (= '(5 7 13 29) (factors 13195))))
 
 (run-tests)
-; (println (last (factors 600851475143)))
+  (println (last (factors 600851475143)))
