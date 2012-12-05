@@ -22,11 +22,18 @@
 ; for each prime:
   ; check if divisible by prime P
   ; if it is add that prime to the factor list and begin to work against the result of the devision instead
-(defn factors [n] (filter #(= 0 (mod n %)) (take-while #(< % n) (primes))))
+
+(defn factors [n] (filter #(= 0 (mod n %)) (take-while #(<= % n) (primes))))
 
 (deftest test-primes
   (is (= '(2) (take 1 (primes))))
   (is (= '(2 3 5 7 11) (take 5 (primes)))))
+
+(deftest test-max-prime
+   "the highest prime my algorithm can find without running out of stack space"
+  (is
+    (= 23041
+      (last (take-while #(>= 23041 %) (primes))))))
 
 (deftest test-factors
   (is (= '(5 7 13 29) (factors 13195))))
