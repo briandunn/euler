@@ -11,13 +11,14 @@
 ;      If there was no such number, stop.
 ;      Otherwise, let p now equal this number (which is the next prime), and repeat from step 3.
 
-(use '(clojure test set))
+(ns euler.three)
+(use 'clojure.test)
 
 (defn primes
   ([]
     (primes 2 (next (next (next (range))))))
   ([p s]
-   (cons p (lazy-seq (primes (first s) (filter #(not= 0 (mod % p)) (next s)))))))
+   (cons p (lazy-seq (primes (first s) (filter #( not= 0 (mod % p)) (next s)))))))
 
 ; for each prime:
   ; check if divisible by prime P
@@ -47,5 +48,5 @@
 (deftest test-factors
   (is (= '(5 7 13 29) (factors 13195))))
 
-(run-tests)
-  (println (last (factors 600851475143)))
+(defn -main []
+  (println (last (factors 600851475143))))

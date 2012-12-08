@@ -6,6 +6,7 @@
 ; By considering the terms in the Fibonacci sequence whose values do not exceed
 ; four million, find the sum of the even-valued terms.
 
+(ns euler.two)
 (use 'clojure.test)
 
 (defn fibonacci
@@ -30,6 +31,5 @@
 (deftest less-than-fourty
   (is (= '(2 8 34) (less-than 40 (even fibonacci)))))
 
-; (run-tests)
-
-(println (->> fibonacci even (less-than 4000000) (reduce +)))
+(defn -main []
+  (println (->> fibonacci even (less-than 4000000) (reduce +))))
