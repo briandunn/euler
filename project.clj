@@ -4,4 +4,6 @@
   :license {:name "do whatever you want"
             :url ""}
   :main euler.core
-  :dependencies [[org.clojure/clojure "1.4.0"]])
+  :dependencies [
+                 [org.clojure/clojure            "1.4.0"]
+                 [org.clojure/math.numeric-tower "0.0.2"]])
