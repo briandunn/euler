@@ -25,17 +25,12 @@
          (factors n rest-of-primes)
          '())))))
 
-(defn to-list
-  [n & more]
-  (flatten (apply list n more)))
-
 (defn least-common-multiple
   [l]
   (reduce *
     (map
-      #(math/expt (key %) (apply max (to-list (val %))))
-      (apply merge-with
-        (fn [r l] (to-list r l))
+      #(math/expt (key %) (val %))
+      (apply merge-with max
         (map frequencies (map factors l))))))
 
 (deftest test-least-common-multiple
